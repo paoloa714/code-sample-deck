@@ -5,10 +5,23 @@ Simple deck of cards API implemented in laravel
 ### installation / quick-test
 
 1. `composer install`
-2. `cd public`
-3. `php -S localhost:<port>`
-4. open another terminal
-5. `curl -X POST localhost:<port>`
+2. `cp .env.example .env`
+3. `vim .env`
+  * Fill all relevant DB fields
+```
+DB_CONNECTION=mysql
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+4. Create the database <DB_DATABASE>
+5. `php artisan migrate`
+6. Run public/index.php on a webserver
+   * `php -S localhost:8000 -t public`
+7. Test
+   * `curl -X POST localhost:8000/deck`
 
 ### relevant files
 
