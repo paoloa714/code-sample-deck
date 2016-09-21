@@ -29,9 +29,17 @@ class DeckController extends Controller {
         return Deck::all();
     }
 
+    public function shuffle($id) {
+        $deck = $this->get($id);
+        $deck->shuffle();
+        $deck->save();
+
+        return $deck;
+    }
+
     /**
      * @param $id
-     * @return Card
+     * @return array
      */
     public function draw($id) {
         $deck = $this->get($id);
