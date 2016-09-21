@@ -1,27 +1,59 @@
-# Laravel PHP Framework
+## Deck of Cards API
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Simple deck of cards API implemented in laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+### installation / quick-test
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+1. `composer install`
+2. `cd public`
+3. `php -S localhost:<port>`
+4. open another terminal
+5. `curl -X POST localhost:<port>`
 
-## Official Documentation
+### relevant files
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+`cd app/Deck`
 
-## Contributing
+### routes
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+```php
 
-## Security Vulnerabilities
+## app/Deck/Http/routes.php
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+Route::post('/deck', DeckController::class . '@create');
+Route::get('/deck/{id}', DeckController::class . '@get');
+Route::post('/deck/{id}/draw', DeckController::class . '@draw');
+Route::delete('/deck/{id}', DeckController::class . '@delete');
+Route::get('/deck' , DeckController::class . '@index');
 
-## License
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+### usage
+
+`POST deck`
+```json
+{
+  "id" : 1,
+  "remaining" : 52
+}
+```
+
+`POST deck\1\draw`
+```json
+{
+  "status" : true,
+  "deck" : {
+    "id" : 1,
+    "remaining" : 51
+  },
+  "card" : {
+    "suite" : "CLUBS",
+    "value" : "ACE"
+  }
+}
+```
+
+-  `POST   deck\1\shuffle   #shuffles the deck`
+-  `GET    deck\1           #retrieves the deck`
+- `DELETE deck\1           #deletes the deck`
+
